@@ -577,6 +577,10 @@
         let topics = JSON.parse(localStorage.getItem('topicsData')) || [];
         let geminiApiKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : '';
         
+        function canUseAI() {
+            return !!geminiApiKey || window.location.protocol.startsWith('http');
+        }
+
         let lastRungTime = "";
         let currentRingingInterval = null; 
         let ringingAlarmId = null;
@@ -692,7 +696,7 @@
                 saveBtn.disabled = true;
 
                 let questions = [];
-                if (geminiApiKey) {
+                if (canUseAI()) {
                     try {
                         questions = await fetchQuestionsFromAPI(newTopicContent, 3);
                     } catch (e) {
@@ -721,7 +725,7 @@
                 if (topic && (!topic.questions || topic.questions.length === 0)) {
                     saveBtn.innerText = "Preparando IA...";
                     saveBtn.disabled = true;
-                    if (geminiApiKey) {
+                    if (canUseAI()) {
                         try {
                             const questions = await fetchQuestionsFromAPI(topic.content, 3);
                             topic.questions = questions;
@@ -817,7 +821,7 @@
             saveBtn.disabled = true;
 
             let questions = [];
-            if (geminiApiKey) {
+            if (canUseAI()) {
                 try {
                     questions = await fetchQuestionsFromAPI(content, 3);
                 } catch (e) {
@@ -958,8 +962,8 @@
             
             puzzleModal.style.display = 'flex';
 
-            // Si no hay tema o no hay API Key, generar pregunta matemática clásica
-            if (!alarm.topicId || !geminiApiKey) {
+            // Si no hay tema o no hay IA disponible, generar pregunta matemática clásica
+            if (!alarm.topicId || !canUseAI()) {
                 generateMathPuzzle();
                 return;
             }
