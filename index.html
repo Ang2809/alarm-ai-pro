@@ -487,7 +487,7 @@
 
         <!-- Vista: Temas -->
         <div class="view-section" id="view-topics">
-            <div class="settings-card" style="display: none;">
+            <div class="settings-card">
                 <label class="form-label">API Key de Google Gemini (Requerida para la IA)</label>
                 <input type="password" id="api-key-input" class="form-input" placeholder="Pega tu API Key aquí..." onchange="saveApiKey()">
             </div>
@@ -578,7 +578,7 @@
         let currentTab = 'alarms';
         let alarms = JSON.parse(localStorage.getItem('alarmsData')) || [];
         let topics = JSON.parse(localStorage.getItem('topicsData')) || [];
-        let geminiApiKey = localStorage.getItem('geminiApiKey') || 'AIzaSyBZIhT18CN3thHbqpFW1tx1Ls1cs-h2OVQ';
+        let geminiApiKey = localStorage.getItem('geminiApiKey') || '';
         
         let lastRungTime = "";
         let currentRingingInterval = null; 
