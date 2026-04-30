@@ -569,7 +569,12 @@
         <source src="alarma.mp3" type="audio/mpeg">
     </audio>
 
-    <script src="config.js"></script>
+    <script>
+        // Si estamos en entorno local, cargamos el config.js. En Vercel no, para evitar el error 404.
+        if (window.location.protocol === 'file:') {
+            document.write('<script src="config.js"><\\/script>');
+        }
+    </script>
     <script>
         // --- ESTADO GLOBAL ---
         let currentTab = 'alarms';
